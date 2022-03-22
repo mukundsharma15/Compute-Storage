@@ -4,9 +4,9 @@ from flask import Flask, request, render_template
 app = Flask(__name__)
 
 
-access_key = 'ASIAQ3S3NHNSOOJZK3VX'
-secret_key = '8g07U88enRegnlyC7Ka8niqQyC/hM5xOe9sD9eoA'
-token = "FwoGZXIvYXdzEAYaDDgT1XnBSAN1qmqBuyLAAdTHyssDEdHlLfY6KSlEKU+B3Ig6wCSGM2rvpjPxZI/HNwx1AmniXmBTBrt2jMS1jI6LUJXSWAZqbUzeGx7LQGkHqQ5aSLSM5h5eXF5qWYhp8G3I8K20ULn0GZK5+9wkEdflMmBzvDQSnnDnTAzvu7mr8kTondAmJBiKFcl4Oso305o9A1achuL0bGp/L4o0LuTO0Rd1U62F3530nr6offHNwJyvA2aXod4FH5kHOqlYU8uz/EPvJADrfVtN646PpSiVi4iRBjItH466pbxKhicuPg7v6h5qC5l0Wv2aKQV39S1C9OMdEbHXd75ZEvHr4/WcyYF2"
+access_key = ''
+secret_key = ''
+token = ""
 
 @app.route('/', methods=['POST', 'GET'])
 def initiate():
@@ -14,11 +14,11 @@ def initiate():
         if request.method == 'POST':
                 if request.form.get('action1') == 'INITIATE':
                         ec2_client = boto3.client("ec2", aws_access_key_id=access_key, aws_secret_access_key=secret_key, aws_session_token=token, region_name='us-east-1')
-                        reservations = ec2_client.describe_instances(InstanceIds=['i-09bd8672c2657ca44']).get("Reservations")
+                        reservations = ec2_client.describe_instances(InstanceIds=['i-']).get("Reservations")
                         for reservation in reservations:
                                 for instance in reservation['Instances']:
                                         aws_ip = instance.get("PublicIpAddress")+":5000"
-                        payload = json.dumps({"banner": "B00893013", "ip": aws_ip})
+                        payload = json.dumps({"banner": "", "ip": aws_ip})
                         print("payload: ", payload)
                         response = requests.request("POST", url, headers={'Content-Type': 'application/json'}, data=payload)
                         return response.text
