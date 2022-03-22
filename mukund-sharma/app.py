@@ -10,7 +10,7 @@ token = ""
 
 @app.route('/', methods=['POST', 'GET'])
 def initiate():
-        url = "http://3.88.132.229/begin"
+        url = "http://IP/begin"
         if request.method == 'POST':
                 if request.form.get('action1') == 'INITIATE':
                         ec2_client = boto3.client("ec2", aws_access_key_id=access_key, aws_secret_access_key=secret_key, aws_session_token=token, region_name='us-east-1')
